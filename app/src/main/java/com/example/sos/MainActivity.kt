@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 getCurrentLocation()
             } else {
-                Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "В разрешении на определение местоположения отказано", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -85,13 +85,13 @@ class MainActivity : ComponentActivity() {
                     mapView.map.move(
                         CameraPosition(userLocation, 14.0f, 0.0f, 0.0f)
                     )
-                    Toast.makeText(this, "Location: (${location.latitude}, ${location.longitude})", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Ваша позиция: (${location.latitude}, ${location.longitude})", Toast.LENGTH_LONG).show()
                     sendLocationToTelegramBot(location.latitude, location.longitude)
                 } else {
-                    Toast.makeText(this, "Location is null", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, "Unable to get location", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Не удается определить местоположение", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -113,18 +113,18 @@ class MainActivity : ComponentActivity() {
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
-                    Toast.makeText(this@MainActivity, "Failed to send location", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "Не удалось отправить местоположение", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
                     runOnUiThread {
-                        Toast.makeText(this@MainActivity, "Location sent to Telegram", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Местоположение отправлено, ожидайте", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     runOnUiThread {
-                        Toast.makeText(this@MainActivity, "Failed to send location", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Не удалось отправить местоположение", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
