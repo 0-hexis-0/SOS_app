@@ -19,20 +19,21 @@
         <meta-data
             android:name="com.yandex.maps.apikey"
             android:value="13164b6f-68f0-4b4d-ad4e-040178426e83" />
-        <meta-data
-            android:name="TELEGRAM_BOT_TOKEN"
-            android:value=""/>
+
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:icon="@drawable/sos_button_svgrepo_com"
             android:label="@string/app_name"
             android:theme="@style/Theme.Sos">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
     </application>
 
 </manifest>
