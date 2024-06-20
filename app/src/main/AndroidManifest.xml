@@ -17,11 +17,9 @@
         android:theme="@style/Theme.Sos"
         tools:targetApi="31">
         <meta-data
-            android:name="com.yandex.maps.apikey"
+            android:name="ApiKeyYandex"
             android:value="13164b6f-68f0-4b4d-ad4e-040178426e83" />
-
-
-        <activity
+            <activity
             android:name=".MainActivity"
             android:exported="true"
             android:icon="@drawable/sos_button_svgrepo_com"
@@ -31,9 +29,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
     </application>
-
 </manifest>

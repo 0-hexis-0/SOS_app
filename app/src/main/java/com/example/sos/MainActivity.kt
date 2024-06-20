@@ -35,25 +35,19 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MapKitFactory.setApiKey("13164b6f-68f0-4b4d-ad4e-040178426e83")
+        MapKitFactory.setApiKey("ApiKeyYandex")
         MapKitFactory.initialize(this)
         setContentView(R.layout.fragment_main_window)
         mapview = findViewById(R.id.mapview)
         mapObjects = mapview.map.mapObjects.addCollection()
-
         mapview.map.move(
             CameraPosition(Point(43.682770, 40.266281), 14.0f, 0.0f, 0.0f),
             Animation(Animation.Type.SMOOTH, 3f), null
         )
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val sosButton = findViewById<Button>(R.id.sosButton)
-
-        // Настраиваем обработчик нажатия на кнопку
         sosButton.setOnClickListener {
-            // Вызываем метод для отправки местоположения в Telegram
             getCurrentLocation()
-
         }
 
         checkLocationPermission()
@@ -69,7 +63,6 @@ class MainActivity : ComponentActivity() {
                 LOCATION_PERMISSION_REQUEST_CODE
             )
         } else {
-
         }
     }
 
