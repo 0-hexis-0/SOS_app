@@ -5,34 +5,31 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- RelativeLayout для размещения элементов -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent">
 
+        <!-- MapView занимает всю доступную область -->
         <com.yandex.mapkit.mapview.MapView
             android:id="@+id/mapview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent" />
 
-            <EditText
-                android:id="@+id/phoneNumberEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="16dp"
-                android:layout_marginStart="21dp"
-                android:gravity="center"
-                android:layout_marginEnd="11dp"
-                android:background="@color/white"
-                android:hint="Введите номер телефона"
-                android:inputType="phone"
-                android:visibility="gone" />
-        </com.yandex.mapkit.mapview.MapView>
+        <!-- EditText для ввода номера телефона, размещенный по центру экрана -->
+        <EditText
+            android:id="@+id/phoneNumberEditText"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:background="@drawable/rounded_edittext_bg"
+            android:hint="Введите номер телефона"
+            android:inputType="phone"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
-        <!-- Кнопка для отправки сигнала SOS -->
+        <!-- Кнопка для отправки сигнала SOS, размещена внизу экрана -->
         <Button
             android:id="@+id/sosButton"
             android:layout_width="wrap_content"
@@ -44,7 +41,7 @@
             android:background="@android:color/holo_red_light"
             android:textColor="@android:color/white"
             android:elevation="8dp" />
-    </RelativeLayout>
 
+    </RelativeLayout>
 
 </FrameLayout>
