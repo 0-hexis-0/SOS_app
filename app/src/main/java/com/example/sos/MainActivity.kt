@@ -5,9 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
-import android.widget.Toast
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
 import androidx.core.content.ContextCompat
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.map.CameraPosition
@@ -37,6 +35,7 @@ class MainActivity : ComponentActivity() {
     private var isPhoneNumberInputVisible = false
     private var userLatitude: Double? = null
     private var userLongitude: Double? = null
+    lateinit var reasonSpinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +45,7 @@ class MainActivity : ComponentActivity() {
         mapview = findViewById(R.id.mapview)
         phoneNumberEditText = findViewById(R.id.phoneNumberEditText)
         sosButton = findViewById(R.id.sosButton)
+        reasonSpinner = findViewById(R.id.reasonSpinner)
 
         mapObjects = mapview.map.mapObjects.addCollection()
         mapview.map.move(
@@ -54,16 +54,24 @@ class MainActivity : ComponentActivity() {
         )
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        // Создаем массив с причинами вызова спасателей
+        val reasons = arrayOf("Медицинская помощь", "Пожар", "Природное бедствие", "Другое")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, reasons)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        reasonSpinner.adapter = adapter
+
         sosButton.setOnClickListener {
             if (isPhoneNumberInputVisible) {
                 val phoneNumber = phoneNumberEditText.text.toString()
+                val reason = reasonSpinner.selectedItem.toString()
                 if (userLatitude != null && userLongitude != null && isValidPhoneNumber(phoneNumber)) {
-                    sendLocationToTelegramBot(userLatitude!!, userLongitude!!, phoneNumber)
+                    sendLocationToTelegramBot(userLatitude!!, userLongitude!!, phoneNumber, reason)
                 } else {
                     Toast.makeText(this, "Пожалуйста, введите корректный номер телефона", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 phoneNumberEditText.visibility = EditText.VISIBLE
+                reasonSpinner.visibility = Spinner.VISIBLE // Показываем Spinner
                 isPhoneNumberInputVisible = true
                 getCurrentLocation()
             }
@@ -140,12 +148,12 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun sendLocationToTelegramBot(latitude: Double, longitude: Double, phoneNumber: String) {
+    private fun sendLocationToTelegramBot(latitude: Double, longitude: Double, phoneNumber: String, reason: String) {
         val url = "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
         val client = OkHttpClient()
 
-        val mapUrl = "https://maps.yandex.ru/1.x/?ll=$longitude,$latitude&z=14&size=450,450&l=map&pt=$longitude,$latitude,pm2rdm"
-        val message = "Телефон: $phoneNumber\nКарта: $mapUrl"
+        val mapUrl = "https://yandex.ru/maps/?pt=$longitude,$latitude&z=14&l=map"
+        val message = "Телефон: $phoneNumber\nПричина: $reason\nКарта: $mapUrl"
 
         val requestBody = FormBody.Builder()
             .add("chat_id", CHAT_ID)
@@ -172,9 +180,10 @@ class MainActivity : ComponentActivity() {
                         Toast.makeText(
                             this@MainActivity, "Местоположение отправлено, ожидайте", Toast.LENGTH_SHORT
                         ).show()
-                        // Обнуляем и скрываем поле ввода номера телефона
+                        // Обнуляем и скрываем поле ввода номера телефона и Spinner
                         phoneNumberEditText.setText("")
                         phoneNumberEditText.visibility = EditText.GONE
+                        reasonSpinner.visibility = Spinner.GONE
                         isPhoneNumberInputVisible = false
                     }
                 } else {
@@ -187,6 +196,8 @@ class MainActivity : ComponentActivity() {
             }
         })
     }
+
+
 
     private fun isValidPhoneNumber(phoneNumber: String): Boolean {
         // Регулярное выражение для проверки стандартного номера телефона России
