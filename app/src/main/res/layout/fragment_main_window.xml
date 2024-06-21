@@ -14,7 +14,23 @@
         <com.yandex.mapkit.mapview.MapView
             android:id="@+id/mapview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" >
+
+            <EditText
+                android:id="@+id/phoneNumberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="16dp"
+                android:layout_marginStart="21dp"
+                android:gravity="center"
+                android:layout_marginEnd="11dp"
+                android:background="@color/white"
+                android:hint="Введите номер телефона"
+                android:inputType="phone"
+                android:visibility="gone" />
+        </com.yandex.mapkit.mapview.MapView>
 
         <!-- Кнопка для отправки сигнала SOS -->
         <Button
