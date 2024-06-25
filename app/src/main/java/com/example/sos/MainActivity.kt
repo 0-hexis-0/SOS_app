@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MapKitFactory.setApiKey("ApiKeyYandex")
+        MapKitFactory.setApiKey("13164b6f-68f0-4b4d-ad4e-040178426e83")
         MapKitFactory.initialize(this)
         setContentView(R.layout.fragment_main_window)
         mapview = findViewById(R.id.mapview)
@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // Создаем массив с причинами вызова спасателей
-        val reasons = arrayOf("Медицинская помощь", "Пожар", "Природное бедствие", "Другое")
+        val reasons = arrayOf("Падение. Возможен перелом.", "Вылетел с трасы. Возможны повреждения.", "Попал под лавину", "Другое")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, reasons)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         reasonSpinner.adapter = adapter
