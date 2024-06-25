@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
         )
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        // Создаем массив с причинами вызова спасателей
+
         val reasons = arrayOf("Падение. Возможен перелом.", "Вылетел с трасы. Возможны повреждения.", "Попал под лавину", "Другое")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, reasons)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                 }
             } else {
                 phoneNumberEditText.visibility = EditText.VISIBLE
-                reasonSpinner.visibility = Spinner.VISIBLE // Показываем Spinner
+                reasonSpinner.visibility = Spinner.VISIBLE
                 isPhoneNumberInputVisible = true
                 getCurrentLocation()
             }
@@ -128,7 +128,7 @@ class MainActivity : ComponentActivity() {
                         CameraPosition(userLocation, 14.0f, 0.0f, 0.0f)
                     )
 
-                    // Добавление маркера на карте
+
                     if (::userMarker.isInitialized) {
                         mapObjects.remove(userMarker)
                     }
@@ -180,7 +180,7 @@ class MainActivity : ComponentActivity() {
                         Toast.makeText(
                             this@MainActivity, "Местоположение отправлено, ожидайте", Toast.LENGTH_SHORT
                         ).show()
-                        // Обнуляем и скрываем поле ввода номера телефона и Spinner
+
                         phoneNumberEditText.setText("")
                         phoneNumberEditText.visibility = EditText.GONE
                         reasonSpinner.visibility = Spinner.GONE
@@ -200,7 +200,7 @@ class MainActivity : ComponentActivity() {
 
 
     private fun isValidPhoneNumber(phoneNumber: String): Boolean {
-        // Регулярное выражение для проверки стандартного номера телефона России
+
         val pattern = Pattern.compile("^((\\+7|7|8)+([0-9]){10})\$")
         return pattern.matcher(phoneNumber).matches()
     }
